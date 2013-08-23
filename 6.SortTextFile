@@ -1,0 +1,52 @@
+/*6.Write a program that reads a text file containing a list of strings, sorts them and saves them to another text file. 
+Example:
+    Ivan			George
+    Peter			Ivan
+    Maria			Maria
+    George		Peter*/
+
+using System;
+using System.IO;
+using System.Text;
+
+
+class SortTextFile
+{
+    static void Main()
+    {
+        try
+        {
+
+            using (StreamReader reader = new StreamReader("originalfile.txt"))
+            {
+                using (StreamWriter writer = new StreamWriter("sortedfile.txt", false, Encoding.GetEncoding("UTF-8")))
+                {
+                    string[] names = reader.ReadToEnd().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    Array.Sort(names);
+                    foreach (var name in names)
+                    {
+                        writer.WriteLine(name);
+                    }
+                }
+            }
+        }
+
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+
